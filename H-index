@@ -1,0 +1,18 @@
+class Solution {
+   public int hIndex(int[] citations) {
+    Arrays.sort(citations); // Sort the array in non-decreasing order.
+    
+    int n = citations.length;
+    int h = 0;
+    
+    for (int i = 0; i < n; i++) {
+        int remainingPapers = n - i;
+        
+        if (citations[i] >= remainingPapers) {
+            h = Math.max(h, remainingPapers);
+        }
+    }
+    
+    return h;
+}
+}
