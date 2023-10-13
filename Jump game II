@@ -1,0 +1,25 @@
+class Solution {
+  public int jump(int[] nums) {
+    int n = nums.length;
+    int jumps = 0;
+    int currentMaxReach = 0; // The current maximum index that can be reached.
+    int nextMaxReach = 0; // The maximum index that can be reached with one more jump.
+
+    for (int i = 0; i < n - 1; i++) {
+        nextMaxReach = Math.max(nextMaxReach, i + nums[i]);
+
+        if (i == currentMaxReach) {
+            jumps++;
+            currentMaxReach = nextMaxReach;
+
+            // If we can reach the end, break early to minimize jumps.
+            if (currentMaxReach >= n - 1) {
+                break;
+            }
+        }
+    }
+
+    return jumps;
+}
+
+}
