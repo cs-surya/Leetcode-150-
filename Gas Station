@@ -1,0 +1,29 @@
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+    int n = gas.length;
+    int totalGas = 0;
+    int currentGas = 0;
+    int startStation = 0;
+
+    for (int i = 0; i < n; i++) {
+        int diff = gas[i] - cost[i];
+        totalGas += diff;
+        currentGas += diff;
+
+        if (currentGas < 0) {
+            // If we can't reach the next station, start from the next station.
+            currentGas = 0;
+            startStation = i + 1;
+        }
+    }
+
+    if (totalGas >= 0) {
+        // If the total gas is non-negative, it means there is a solution.
+        return startStation;
+    } else {
+        // If the total gas is negative, there is no solution.
+        return -1;
+    }
+}
+
+}
