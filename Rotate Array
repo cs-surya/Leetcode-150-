@@ -1,0 +1,18 @@
+class Solution {
+   public void rotate(int[] nums, int k) {
+    int n = nums.length;
+    k = k % n; // Handle cases where k is greater than the array length.
+
+    int[] result = new int[n];
+    
+    // Copy the elements to their new positions.
+    for (int i = 0; i < n; i++) {
+        result[(i + k) % n] = nums[i];
+    }
+    
+    // Copy the rotated array back to the original array.
+    System.arraycopy(result, 0, nums, 0, n);
+}
+
+
+}
