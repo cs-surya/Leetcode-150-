@@ -1,0 +1,48 @@
+class Solution {
+    public List<String> fullJustify(String[] words, int maxWidth) {
+          List<String> result = new ArrayList<>();
+        int index = 0;
+
+        while (index < words.length) {
+            int lineStart = index;
+            int lineEnd = index;
+            int lineLength = 0;
+
+            while (lineEnd < words.length && lineLength + words[lineEnd].length() + lineEnd - lineStart <= maxWidth) {
+                lineLength += words[lineEnd].length();
+                lineEnd++;
+            }
+
+            int numWords = lineEnd - lineStart;
+            int totalSpaces = maxWidth - lineLength;
+
+            if (numWords == 1 || lineEnd == words.length) {
+                // Left-justify for single word lines or the last line
+                StringBuilder line = new StringBuilder(words[lineStart]);
+                for (int i = lineStart + 1; i < lineEnd; i++) {
+                    line.append(" ").append(words[i]);
+                }
+                line.append(" ".repeat(maxWidth - lineLength - numWords + 1));
+                result.add(line.toString());
+            } else {
+                // Fully justify for other lines
+                int spacesBetweenWords = totalSpaces / (numWords - 1);
+                int extraSpaces = totalSpaces % (numWords - 1);
+                StringBuilder line = new StringBuilder(words[lineStart]);
+
+                for (int i = lineStart + 1; i < lineEnd; i++) {
+                    line.append(" ".repeat(spacesBetweenWords));
+                    if (i - lineStart <= extraSpaces) {
+                        line.append(" ");
+                    }
+                    line.append(words[i]);
+                }
+                result.add(line.toString());
+            }
+
+            index = lineEnd;
+        }
+
+        return result;
+    }
+}
