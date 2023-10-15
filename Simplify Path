@@ -1,0 +1,36 @@
+class Solution {
+    public String simplifyPath(String path) {
+         String[] components = path.split("/");
+    
+    // Use a stack to keep track of the canonical path
+    Stack<String> stack = new Stack<>();
+    
+    for (String component : components) {
+        if (component.isEmpty() || component.equals(".")) {
+            // Ignore empty components and '.'
+            continue;
+        } else if (component.equals("..")) {
+            // Go up one level by popping from the stack
+            if (!stack.isEmpty()) {
+                stack.pop();
+            }
+        } else {
+            // Push valid directory names onto the stack
+            stack.push(component);
+        }
+    }
+    
+    // Build the simplified canonical path
+    StringBuilder simplifiedPath = new StringBuilder("/");
+    for (String dir : stack) {
+        simplifiedPath.append(dir).append("/");
+    }
+    
+    // Remove the trailing slash if it exists
+    if (simplifiedPath.length() > 1) {
+        simplifiedPath.setLength(simplifiedPath.length() - 1);
+    }
+    
+    return simplifiedPath.toString();
+    }
+}
